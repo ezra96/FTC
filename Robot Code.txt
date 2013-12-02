@@ -1,41 +1,33 @@
-#pragma debuggerWindows("joystickSimple");
+#pragma config(Hubs,  S1, HTMotor,  HTMotor,  none,     none)
+#pragma config(Sensor, S1,     ,               sensorI2CMuxController)
+#pragma config(Sensor, S2,     touch,          sensorTouch)
+#pragma config(Sensor, S3,     light,          sensorLightActive)
+#pragma config(Sensor, S4,     sonar,          sensorSONAR)
+#pragma config(Motor,  mtr_S1_C1_1,     motorD,        tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S1_C1_2,     motorE,        tmotorTetrix, openLoop, reversed, encoder)
+#pragma config(Motor,  mtr_S1_C2_1,      ,             tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C2_2,      ,             tmotorTetrix, openLoop)
 #include "JoystickDriver.c"
-	
 task main()
 {
-	int threshold = 10;								//defines a threshold to be set for joystick
-	int maximumjoystick = 128;						//the maximum possible joystick value
-	float turn = 0; 								//defines the initial turn adjustment as 0
-	ubyte mag = 0;									//defines the initial magnitude as 0
-	bMotorReflected[motorA] = true;					//reverses intuitive direction of motor on flywheel?
-												//check which motor that needs to be
-	nSyncedMotors = synchAB;							//slaves motors A and B
-While (true)
-	{	
-		getJoystickSettings(joystick);
-		mag = floor(-sgn(joystick.joy1_y1) * sqrt(pow(joystick.joy1_y1, 2) + pow(joystick.joy1_x1, 2));
-												//defines mag as the integer magnitude of deflection of the joystick from center
-		if (abs(joystick.joy1_x1) > threshold)
-			{turn = joystick.joy1_x1 / maximumjoystick}
-		else
-			{turn = 0}
-												//defines the fractional turn adjustment value assuming threshold is met
-		byte mDD = floor(mag + turn * 200);
-			if (abs(mDD) > 100) {mDD = sgn(mDD) * 100}
-												//not sure if necessary, but sets a bound of 100 on motor drives
-		byte mDE = floor(mag - turn * 200);
-			if (abs(mDE) > 100) {mDD = sgn(mDE) * 100}
-												//not sure if necessary, but sets a bound of 100 on motor drives
-		if (mag > threshold)
-			{motor(motorD) = mDD;
-			motor(motorE) = mDE;}
-		else
-			{motor(motorD) = 0;
-			motor(motorE) = 0;}
-												//defines the motor values assuming threshold is met
-												//which motor is which, adjust negatives and positives accordingly
-		motor(motorA) = joy1Btn(6) * 100
-												//turns on flywheels
-												//what motors are flywheels, adjust accordingly
+	short mag;
+	short turn;
+	while(true)
+{
+	mag = sgn(joystick.joy1_y1)*floor(sqrt(pow(joystick.joy1_x1,2) + pow(joystick.joy1_y1,2)));
+	turn = joystick.joy1_x1 * 2;
+	getJoystickSettings(joystick);
+	if (abs(mag) > 7)
+	{
+		motor[motorE] = mag+turn;
+		motor[motorD] = mag-turn;
 	}
+	else
+	{
+		motor[motorE] = 0;
+		motor[motorD] = 0;
+	}
+}
+
+
 }
