@@ -24,8 +24,8 @@ task main()
 			}
 		if(max > 20)
 			{
-				motor[motorE] = L/max;
-				motor[motorD] = R/max;
+				motor[motorE] = floor(L/max);
+				motor[motorD] = floor(R/max);
 			}
 	}
 }	
