@@ -1,38 +1,39 @@
-#pragma config(Hubs,  S1, HTMotor,  HTMotor,  none,     none)
-#pragma config(Sensor, S1,     ,               sensorI2CMuxController)
-#pragma config(Sensor, S2,     touch,          sensorTouch)
-#pragma config(Sensor, S3,     light,          sensorLightActive)
-#pragma config(Sensor, S4,     sonar,          sensorSONAR)
-#pragma config(Motor,  mtr_S1_C1_1,     motorD,        tmotorTetrix, openLoop, encoder)
-#pragma config(Motor,  mtr_S1_C1_2,     motorE,        tmotorTetrix, openLoop, reversed, encoder)
-#pragma config(Motor,  mtr_S1_C2_1,      ,             tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S1_C2_2,      ,             tmotorTetrix, openLoop)
+#pragma config(Hubs, S1, HTMotor, HTMotor, none, none)
+#pragma config(Sensor, S1, , sensorI2CMuxController)
+#pragma config(Sensor, S2, touch, sensorTouch)
+#pragma config(Sensor, S3, light, sensorLightActive)
+#pragma config(Sensor, S4, sonar, sensorSONAR)
+#pragma config(Motor, mtr_S1_C1_1, motorD, tmotorTetrix, openLoop, encoder)
+#pragma config(Motor, mtr_S1_C1_2, motorE, tmotorTetrix, openLoop, reversed, encoder)
+#pragma config(Motor, mtr_S1_C2_1, , tmotorTetrix, openLoop)
+#pragma config(Motor, mtr_S1_C2_2, , tmotorTetrix, openLoop)
 #include "JoystickDriver.c"
 task main()
 {
-	short L
-	short R
-	short mag
-	while(true)
-	{
-		getJoystickSettings(joystick);
-		mag = floor(sqrt(pow(joystick.joy1_x1,2) + pow(joystick.joy1_y1,2))/1.28);
-		L = -joystick.joy1_y1 + joystick.joy1_x1;
-		R = -joystick.joy1_y1 - joystick.joy1_x1;
-		max=abs(L);
-		if(max<abs(R))
-			{
-				max=abs(R)
-			}
-		if(max > 20)
-			{
-				motor[motorE] = floor(mag*L/max);
-				motor[motorD] = floor(mag*R/max);
-			}
-		else
-			{
-				motor[motorE] = 0;
-				motor[motorD] = 0;
-			}
-	}
-}	
+        short L;
+        short R;
+        short mag;
+        short max;
+        while(true)
+        {
+                getJoystickSettings(joystick);
+                mag = floor(sqrt(pow(joystick.joy1_x1,2) + pow(joystick.joy1_y1,2))/1.28);
+                L = joystick.joy1_y1 - joystick.joy1_x1;
+                R = joystick.joy1_y1 + joystick.joy1_x1;
+                max = abs(L);
+                if(max<abs(R))
+                        {
+                                max=abs(R);
+                        }
+                if(mag > 8)
+                        {
+                                motor[motorE] = floor(mag*R/max);
+                                motor[motorD] = floor(mag*L/max);
+                        }
+                else
+                        {
+                                motor[motorE] = 0;
+                                motor[motorD] = 0;
+                        }
+        }
+}        
