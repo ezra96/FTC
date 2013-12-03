@@ -14,9 +14,9 @@ task main()
 	short turn;
 	while(true)
 {
+	getJoystickSettings(joystick);
 	mag = sgn(joystick.joy1_y1)*floor(sqrt(pow(joystick.joy1_x1,2) + pow(joystick.joy1_y1,2)));
 	turn = joystick.joy1_x1 * 2;
-	getJoystickSettings(joystick);
 	if (abs(mag) > 7)
 	{
 		motor[motorE] = mag+turn;
