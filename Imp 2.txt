@@ -12,9 +12,11 @@ task main()
 {
 	short L
 	short R
+	short mag
 	while(true)
 	{
 		getJoystickSettings(joystick);
+		mag = floor(sqrt(pow(joystick.joy1_x1,2) + pow(joystick.joy1_y1,2))/1.28);
 		L = -joystick.joy1_y1 + joystick.joy1_x1;
 		R = -joystick.joy1_y1 - joystick.joy1_x1;
 		max=abs(L);
@@ -24,8 +26,8 @@ task main()
 			}
 		if(max > 20)
 			{
-				motor[motorE] = floor(L/max);
-				motor[motorD] = floor(R/max);
+				motor[motorE] = floor(mag*L/max);
+				motor[motorD] = floor(mag*R/max);
 			}
 		else
 			{
