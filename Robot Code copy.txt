@@ -10,29 +10,22 @@
 #include "JoystickDriver.c"
 task main()
 {
-	short mag;
-	short turn;
+	short L
+	short R
 	while(true)
-{
-	getJoystickSettings(joystick);
-<<<<<<< HEAD
-	mag = sgn(joystick.joy1_y1)*floor(sqrt(pow(joystick.joy1_x1,2) + pow(joystick.joy1_y1,2)));
-	turn = joystick.joy1_x1 * 2;
-=======
-	mag = sgn(joystick.joy1_y1)*floor(sqrt(pow(joystick.joy1_x1,2) + pow(joystick.joy1_y1,2))/1.28);
-	turn = floor(joystick.joy1_x1 * 2/1.28);
->>>>>>> New-idea
-	if (abs(mag) > 7)
 	{
-		motor[motorE] = mag+turn;
-		motor[motorD] = mag-turn;
+		getJoystickSettings(joystick);
+		L = -joystick.joy1_y1 + joystick.joy1_x1;
+		R = -joystick.joy1_y1 - joystick.joy1_x1;
+		max=abs(L);
+		if(max<abs(R))
+			{
+				max=abs(R)
+			}
+		if(max > 20)
+			{
+				motor[motorE] = L/max;
+				motor[motorD] = R/max;
+			}
 	}
-	else
-	{
-		motor[motorE] = 0;
-		motor[motorD] = 0;
-	}
-}
-
-
-}
+}	
