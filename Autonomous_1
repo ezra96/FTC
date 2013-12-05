@@ -1,0 +1,40 @@
+#pragma config(Hubs, S1, HTMotor, HTMotor, none, none)
+#pragma config(Sensor, S1, , sensorI2CMuxController)
+#pragma config(Sensor, S2, touch, sensorTouch)
+#pragma config(Sensor, S3, light, sensorLightActive)
+#pragma config(Sensor, S4, sonar, sensorSONAR)
+#pragma config(Motor, mtr_S1_C1_1, motorD, tmotorTetrix, openLoop, encoder)
+#pragma config(Motor, mtr_S1_C1_2, motorE, tmotorTetrix, openLoop, reversed, encoder)
+#pragma config(Motor, mtr_S1_C2_1, , tmotorTetrix, openLoop)
+#pragma config(Motor, mtr_S1_C2_2, , tmotorTetrix, openLoop)
+#include "JoystickDriver.c"
+task main()
+{
+    if sensorINFRARED < 5;
+    
+        motor[motorD]=50;
+        wait10Msec(50);//both of these should be adjusted so that the robot turns 90 degrees left
+        
+        else
+            motor[motorE]=50;
+            wait10Msec(50);//both of these should be adjusted so that it turns 90 degrees right
+    while (sensorSONAR <=    24)
+        motor[motorD]=60;
+        motor[motorE]=60;//reverse accordingly to make it go forward until 2' away from far wall
+if sensorINFRARED < 5;
+	motor[motorD] = 50;
+	wait1Msec(100);//adjust to make it turn 135ish° left
+else 
+	motor[motorE] = 50;
+	wait1Msec(100);//adjust this as well to make it turn 135ish° right
+while(sensorINFRARED =! 5);
+while(sensorINFRARED < 5)
+motor[motorE] = 50; //make sure this makes the robot turn right
+while(sensorINFRARED > 5)
+		motor[motorD] =50;//make sure this makes it turn left
+if sensorINFRARED == 5;
+	while (sensorSONAR < 7);
+		motor[motorD] = 50;
+		motor[motorE] = 50;//adjust to make the robot go forward until it's close enough to the container thing		
+
+}
