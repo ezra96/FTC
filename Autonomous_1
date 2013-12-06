@@ -10,31 +10,85 @@
 #include "JoystickDriver.c"
 task main()
 {
-    if sensorINFRARED < 5;
-    
-        motor[motorD]=50;
-        wait10Msec(50);//both of these should be adjusted so that the robot turns 90 degrees left
-        
-        else
-            motor[motorE]=50;
-            wait10Msec(50);//both of these should be adjusted so that it turns 90 degrees right
-    while (sensorSONAR <=    24)
-        motor[motorD]=60;
-        motor[motorE]=60;//reverse accordingly to make it go forward until 2' away from far wall
-if sensorINFRARED < 5;
-	motor[motorD] = 50;
-	wait1Msec(100);//adjust to make it turn 135ish° left
-else 
-	motor[motorE] = 50;
-	wait1Msec(100);//adjust this as well to make it turn 135ish° right
-while(sensorINFRARED =! 5);
-while(sensorINFRARED < 5)
-motor[motorE] = 50; //make sure this makes the robot turn right
-while(sensorINFRARED > 5)
-		motor[motorD] =50;//make sure this makes it turn left
-if sensorINFRARED == 5;
-	while (sensorSONAR < 7);
-		motor[motorD] = 50;
-		motor[motorE] = 50;//adjust to make the robot go forward until it's close enough to the container thing		
-
-}
+   if(SensorValue(sensorIfrared) < 5) //this is to account for the fact that the IR beacon could be on either of the two sides of the rack
+   	{
+   	while(SensorValue(sensorInfrared) != 2)
+   		{
+   		motor[motorD] = 100;
+   		motor[motorE] = -100;
+   		}
+   	}
+   else
+   	{
+   	while(SensorValue(sensorInfrared) != 8)
+   		{
+   		motor[motorD] = 100;
+   		motor[motorE] = -100;
+   		}
+   	}
+   
+   motor[motorD] = 100;
+   motor[motorE] = -100;
+   wait1Msec(20);
+   
+   if(SensorValue(sensorInfrared) < 5)
+   	{
+   	while(SensorValue(sensorInfrared) != 4) // this is so that we can make sure it doesn't hit the rack.  We can change it to 5 if it isn't a problem.
+   		{
+   		motor[motorD] = 50; //make sure this turns the robot to the left
+   		}
+   	while(SensorValue(sensorInfrared) != 2)
+   		{
+   		motor[motorD] = 100;
+   		motor[motorE] = -100;
+   		}
+   	}
+   else
+   	{
+   	while(SensorValue(sensorInfrared) != 6)
+   		{
+   		motor[motorE] = -50; //adjust so that it turns right
+   		}
+   	while(SensorValue(sensorInfrared) != 8)
+   		{
+   		motor[motorD] = 100;
+   		motor[motorE] = -100;
+   		}
+   	}
+   	
+   if(SensorValue(sensorInfrared) < 5)
+   	{
+   	while(SensorValue(sensorInfrared) != 5)
+   		{
+   		motor[motorD] = 50;
+   		}
+   	}
+   else
+   	{
+   	while(SensorValue(sensorInfrared) != 5)
+   		{
+   		motor[motorE] = -50;
+   		}
+   	}
+   
+   while(SensorValue(sensorSonar) > 10) //we'll need to play around with the value a bit
+   	{
+   	motor[motorD] = 50;
+   	motor[motorE] = -50;
+   	}
+   	
+   motor[motorF] = 50;
+   motor[motorG] = 50;//These should be replaced with the motors that govern the conveyor thing and the signs should be adjusted accordingly so as to make them put the cube into the container
+   wait1Msec(3000);
+   
+   nMotorEncoder[motorD] = 0;
+   nMotorEncoderTarget[motorD] = 90;
+   motor[motorD] = 75;
+   
+   while(nMotorRunState[motorD] = runStateIdle)
+   {
+   
+   }
+   
+   
+   
