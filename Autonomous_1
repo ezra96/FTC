@@ -80,8 +80,10 @@ task main()
    motor[motorE] = -75;
    wait1Msec(1000);//change to make sure it doesn't hit the wall behind it
    
-   motor[motorF] = 25; //change so that this is the motor that controls the arm and so that it moves it down into the correct position
-   wait1Msec(500);
+   nMotorEncoder[motorF] = 0;
+   nMotorEncoderTarget[motorF] = n; //set this to be whatever it needs to be so as to make the arm move down into position
+   motor[motorF] = 25;
+   while(nMotorRunState[motorF] != runStateIdle) {}
    
    while(SensorValue(sensorSonar) > 10) //we'll need to play around with this value a bit
    	{
@@ -111,7 +113,7 @@ task main()
       }
    
    nMotorEncoder[motorE] = 0;
-   nMotorEncoderTarget[motorE] = 90;
+   nMotorEncoderTarget[motorE] = 90;  
    motor[motorD] = -75;
    motor[motorE] = 75;
    while(nMotorRunState[motorE] = runStateIdle) {}
