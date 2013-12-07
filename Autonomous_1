@@ -15,7 +15,7 @@ task main()
    	while(SensorValue(sensorInfrared) != 2)
    		{
    		motor[motorD] = 100;
-   		motor[motorE] = -100;
+   		motor[motorE] = 100;
    		}
    	}
    else
@@ -23,12 +23,12 @@ task main()
    	while(SensorValue(sensorInfrared) != 8)
    		{
    		motor[motorD] = 100;
-   		motor[motorE] = -100;
+   		motor[motorE] = 100;
    		}
    	}
    
    motor[motorD] = 100;
-   motor[motorE] = -100;
+   motor[motorE] = 100;
    wait1Msec(20);
    
    if(SensorValue(sensorInfrared) < 5)
@@ -36,23 +36,25 @@ task main()
    	while(SensorValue(sensorInfrared) != 4) // this is so that we can make sure it doesn't hit the rack.  We can change it to 5 if it isn't a problem.
    		{
    		motor[motorD] = 50; //make sure this turns the robot to the left
+   		motor[motorE] = -50;
    		}
    	while(SensorValue(sensorInfrared) != 2)
    		{
    		motor[motorD] = 100;
-   		motor[motorE] = -100;
+   		motor[motorE] = 100;
    		}
    	}
    else
    	{
    	while(SensorValue(sensorInfrared) != 6)
    		{
-   		motor[motorE] = -50; //adjust so that it turns right
+   		motor[motorE] = 50; //adjust so that it turns right
+   		motor[motorD] = -50;
    		}
    	while(SensorValue(sensorInfrared) != 8)
    		{
    		motor[motorD] = 100;
-   		motor[motorE] = -100;
+   		motor[motorE] = 100;
    		}
    	}
    	
@@ -61,20 +63,22 @@ task main()
    	while(SensorValue(sensorInfrared) != 5)
    		{
    		motor[motorD] = 50;
+   		motor[motorE] = -50;
    		}
    	}
    else
    	{
    	while(SensorValue(sensorInfrared) != 5)
    		{
-   		motor[motorE] = -50;
+   		motor[motorE] = 50;
+   		motor[motorD] = -50;
    		}
    	}
    
    while(SensorValue(sensorSonar) > 10) //we'll need to play around with the value a bit
    	{
    	motor[motorD] = 50;
-   	motor[motorE] = -50;
+   	motor[motorE] = 50;
    	}
    	
    motor[motorF] = 50;
@@ -84,11 +88,42 @@ task main()
    nMotorEncoder[motorD] = 0;
    nMotorEncoderTarget[motorD] = 90;
    motor[motorD] = 75;
+   motor[motorE] = -75;
+   while(nMotorRunState[motorD] = runStateIdle) {}
+   motor[motorE] = 0;
    
-   while(nMotorRunState[motorD] = runStateIdle)
-   {
+   while(SensorValue(sensorSonar) > 5)
+      {
+      motor[motorE] = 100;
+      motor[motorD] = 100;
+      }
    
-   }
+   nMotorEncoder[motorE] = 0;
+   nMotorEncoderTarget[motorE] = 90;
+   motor[motorD] = -75;
+   motor[motorE] = 75;
+   while(nMotorRunState[motorE] = runStateIdle) {}
+   motor[motorD] = 0;
+   
+   motor[motorD] = 100;
+   motor[motorE] = 100;
+   wait1Msec(2000); //adjust to give it enough time to get to the center of the ramp
+   
+   nMotorEncoder[motorE] = 0;
+   nMotorEncoderTarget[motorE] = 90;
+   motor[motorD] = -75;
+   motor[motorE] = 75;
+   while(nMotorRunState[motorE] = runStateIdle) {}
+   motor[motorD] = 0;//all of these blocks need to be adjusted so that it turnes 90 degrees either to the right or to the lef
+   
+   while(SensorValue(sensorSonar) > 256)
+      {
+      motor[motorD] = 100;
+      motor[motorE] = 100;
+      }
+      
+   motor[motorD] = 0;
+   motor[motorE] = 0;
    
    
    
