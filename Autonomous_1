@@ -116,7 +116,7 @@ task main()
    while(nMotorRunState[motorE] = runStateIdle) {}
    motor[motorD] = 0;//all of these blocks need to be adjusted so that it turnes 90 degrees either to the right or to the lef
    
-   while(SensorValue(sensorSonar) > 256)
+   while(SensorValue(sensorSonar) > 226)
       {
       motor[motorD] = 100;
       motor[motorE] = 100;
