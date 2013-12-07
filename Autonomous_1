@@ -10,7 +10,7 @@
 #include "JoystickDriver.c"
 task main()
 {
-   if(SensorValue(sensorIfrared) < 5) //this is to account for the fact that the IR beacon could be on either of the two sides of the rack
+   if(SensorValue(sensorInfrared) < 5) //this is to account for the fact that the IR beacon could be on either of the two sides of the rack
    	{
    	while(SensorValue(sensorInfrared) != 2)
    		{
@@ -75,7 +75,7 @@ task main()
    		}
    	}
    
-   while(SensorValue(sensorSonar) > 10) //we'll need to play around with the value a bit
+   while(SensorValue(sensorSonar) > 10) //we'll need to play around with this value a bit
    	{
    	motor[motorD] = 50;
    	motor[motorE] = 50;
