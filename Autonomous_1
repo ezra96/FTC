@@ -29,7 +29,7 @@ task main()
    
    motor[motorD] = 100;
    motor[motorE] = 100;
-   wait1Msec(20);
+   wait1Msec(n);//modify so that it works
    
    if(SensorValue(sensorInfrared) < 5)
    	{
@@ -100,7 +100,7 @@ task main()
    wait1Msec(1000);//change to make sure it doesn't hit the wall behind it
    
    nMotorEncoder[motorD] = 0;
-   nMotorEncoderTarget[motorD] = 90;
+   nMotorEncoderTarget[motorD] = n;//set n equal to whatever makes it turn 90 degrees
    motor[motorD] = 75;
    motor[motorE] = -75;
    while(nMotorRunState[motorD] = runStateIdle) {}
@@ -113,7 +113,7 @@ task main()
       }
    
    nMotorEncoder[motorE] = 0;
-   nMotorEncoderTarget[motorE] = 90;  
+   nMotorEncoderTarget[motorE] = n;  
    motor[motorD] = -75;
    motor[motorE] = 75;
    while(nMotorRunState[motorE] = runStateIdle) {}
@@ -124,13 +124,13 @@ task main()
    wait1Msec(2000); //adjust to give it enough time to get to the center of the ramp
    
    nMotorEncoder[motorE] = 0;
-   nMotorEncoderTarget[motorE] = 90;
+   nMotorEncoderTarget[motorE] = n;
    motor[motorD] = -75;
    motor[motorE] = 75;
    while(nMotorRunState[motorE] = runStateIdle) {}
    motor[motorD] = 0;//all of these blocks need to be adjusted so that it turnes 90 degrees either to the right or to the lef
    
-   while(SensorValue(sensorSonar) > 226)
+   while(SensorValue(sensorSonar) > 226) //this is assuming it uses cm for its measurements
       {
       motor[motorD] = 100;
       motor[motorE] = 100;
