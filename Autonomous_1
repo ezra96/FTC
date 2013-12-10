@@ -10,70 +10,33 @@
 #include "JoystickDriver.c"
 task main()
 {
-   if(SensorValue(sensorInfrared) < 5) //this is to account for the fact that the IR beacon could be on either of the two sides of the rack
-   	{
-   	while(SensorValue(sensorInfrared) != 2)
-   		{
-   		motor[motorD] = 100;
-   		motor[motorE] = 100;
-   		}
-   	}
-   else
-   	{
-   	while(SensorValue(sensorInfrared) != 8)
-   		{
-   		motor[motorD] = 100;
-   		motor[motorE] = 100;
-   		}
-   	}
+while(SensorValue(sensorSonar) != 2 || SensorValue(sensorSonar) != 8)
+   {
+   motor[motorD] = 100;
+   motor[motorE] = 100;
+   }
    
    motor[motorD] = 100;
    motor[motorE] = 100;
    wait1Msec(n);//modify so that it works
    
-   if(SensorValue(sensorInfrared) < 5)
+  
+   while(SensorValue(sensorInfrared) != 5) 
    	{
-   	while(SensorValue(sensorInfrared) != 5) 
-   		{
-   		motor[motorD] = 50; //make sure this turns the robot to the left
-   		motor[motorE] = -50;
-   		}
-   	while(SensorValue(sensorInfrared) != 2)
-   		{
-   		motor[motorD] = 100;
-   		motor[motorE] = 100;
-   		}
+   	motor[motorD] = 50 * sgn(5-SensorValue(sensorInfrared); //make sure this turns the robot in the right direction
+   	motor[motorE] = -50 * sgn(5-SensorValue(sensorInfrared);
    	}
-   else
-   	{
-   	while(SensorValue(sensorInfrared) != 5)
-   		{
-   		motor[motorE] = 50; //adjust so that it turns right
-   		motor[motorD] = -50;
-   		}
    		
-   	while(SensorValue(sensorInfrared) != 8)
-   		{
-   		motor[motorD] = 100;
-   		motor[motorE] = 100;
-   		}
+   while(SensorValue(sensorInfrared) != 2 || SensorValue(sensorInfrared) != 8)
+   	{
+   	motor[motorD] = 100;
+   	motor[motorE] = 100;
    	}
    	
-   if(SensorValue(sensorInfrared) < 5)
-   	{
-   	while(SensorValue(sensorInfrared) != 5)
-   		{
-   		motor[motorD] = 50;
-   		motor[motorE] = -50;
-   		}
-   	}
-   else
-   	{
-   	while(SensorValue(sensorInfrared) != 5)
-   		{
-   		motor[motorE] = 50;
-   		motor[motorD] = -50;
-   		}
+   while(SensorValue(sensorInfrared) != 5)
+   	{   		
+   	motor[motorD] = 50 * sgn(5-SensorValue(sensorInfrared); //make sure this turns the robot in the right direction
+   	motor[motorE] = -50 * sgn(5-SensorValue(sensorInfrared);	
    	}
    	
    motor[motorD] = -75;
