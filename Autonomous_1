@@ -10,7 +10,7 @@
 #include "JoystickDriver.c"
 task main()
 {
-while(SensorValue(sensorSONAR) != 2 || SensorValue(sensorSONAR) != 8)
+while(SensorValue(sensorInfrared) != 2 || SensorValue(sensorInfrared) != 8)
    {
    motor[motorD] = 100;
    motor[motorE] = 100;
