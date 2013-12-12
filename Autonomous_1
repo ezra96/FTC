@@ -23,8 +23,8 @@ wait1Msec(n);//modify so that it works
   
 while(SensorValue(sensorInfrared) != 5) 
 	{
-	motor[motorD] = 50 * sgn(5-SensorValue(sensorInfrared); //make sure this turns the robot in the right direction
-	motor[motorE] = -50 * sgn(5-SensorValue(sensorInfrared);
+	motor[motorD] = 50 * sgn(5-SensorValue(sensorInfrared)); //make sure this turns the robot in the right direction
+	motor[motorE] = -50 * sgn(5-SensorValue(sensorInfrared));
 	}
    		
 while(SensorValue(sensorInfrared) != 2 || SensorValue(sensorInfrared) != 8)
@@ -35,8 +35,8 @@ while(SensorValue(sensorInfrared) != 2 || SensorValue(sensorInfrared) != 8)
    	
 while(SensorValue(sensorInfrared) != 5)
 	{   		
-	motor[motorD] = 50 * sgn(5-SensorValue(sensorInfrared); //make sure this turns the robot in the right direction
-	motor[motorE] = -50 * sgn(5-SensorValue(sensorInfrared);	
+	motor[motorD] = 50 * sgn(5-SensorValue(sensorInfrared)); //make sure this turns the robot in the right direction
+	motor[motorE] = -50 * sgn(5-SensorValue(sensorInfrared));	
 	}
    	
 motor[motorD] = -75;
@@ -48,7 +48,7 @@ nMotorEncoderTarget[motorF] = n; //set this to be whatever it needs to be so as 
 motor[motorF] = 25;
 while(nMotorRunState[motorF] != runStateIdle) {}
    
-while(SensorValue(sensorSonar) > 10) //we'll need to play around with this value a bit
+while(SensorValue(sensorSONAR) > 10) //we'll need to play around with this value a bit
 	{
 	motor[motorD] = 50;
 	motor[motorE] = 50;
