@@ -1,7 +1,7 @@
 #pragma config(Hubs, S1, HTMotor, HTMotor, none, none)
 #pragma config(Sensor, S1, , sensorI2CMuxController)
 #pragma config(Sensor, S2, touch, sensorTouch)
-#pragma config(Sensor, S3, light, sensorLightActive)
+#pragma config(Sensor, S3, infrared, sensorHiTechnicIRSeeker12000)
 #pragma config(Sensor, S4, sonar, sensorSONAR)
 #pragma config(Motor, mtr_S1_C1_1, motorD, tmotorTetrix, openLoop, encoder)
 #pragma config(Motor, mtr_S1_C1_2, motorE, tmotorTetrix, openLoop, reversed, encoder)
@@ -10,7 +10,7 @@
 #include "JoystickDriver.c"
 task main()
 {
-while(SensorValue(sensorInfrared) != 2 || SensorValue(sensorInfrared) != 8)
+while(SensorValue(sensorHiTechnicIRSeeker12000) != 2 || SensorValue(sensorHiTechnicIRSeeker12000) != 8)
    {
    motor[motorD] = 100;
    motor[motorE] = 100;
@@ -18,33 +18,35 @@ while(SensorValue(sensorInfrared) != 2 || SensorValue(sensorInfrared) != 8)
    
 motor[motorD] = 100;
 motor[motorE] = 100;
-wait1Msec(n);//modify so that it works
+wait1Msec(500);//modify so that it works
    
   
 while(SensorValue(sensorInfrared) != 5) 
 	{
-	motor[motorD] = 50 * sgn(5-SensorValue(sensorInfrared)); //make sure this turns the robot in the right direction
-	motor[motorE] = -50 * sgn(5-SensorValue(sensorInfrared));
+	motor[motorD] = 50 * sgn(5-SensorValue(sensorHiTechnicIRSeeker12000)); //make sure this turns the robot in the right direction
+	motor[motorE] = -50 * sgn(5-SensorValue(sensorHiTechnicIRSeeker12000));
 	}
    		
-while(SensorValue(sensorInfrared) != 2 || SensorValue(sensorInfrared) != 8)
+while(SensorValue(sensorHiTechnicIRSeeker12000) != 2 || SensorValue(sensorHiTechnicIRSeeker12000) != 8)
 	{
 	motor[motorD] = 100;
 	motor[motorE] = 100;
 	}
    	
-while(SensorValue(sensorInfrared) != 5)
+while(SensorValue(sensorHiTechnicIRSeeker12000) != 5)
 	{   		
-	motor[motorD] = 50 * sgn(5-SensorValue(sensorInfrared)); //make sure this turns the robot in the right direction
-	motor[motorE] = -50 * sgn(5-SensorValue(sensorInfrared));	
+	motor[motorD] = 50 * sgn(5-SensorValue(sensorHiTechnicIRSeeker12000)); //make sure this turns the robot in the right direction
+	motor[motorE] = -50 * sgn(5-SensorValue(sensorHiTechnicIRSeeker12000));	
 	}
    	
-motor[motorD] = -75;
-motor[motorE] = -75;
-wait1Msec(1000);//change to make sure it doesn't hit the wall behind it
+while(SensorValue(sensorSONAR) < 20)//needs to be changed after testing
+	{
+	motor[motorD] = -75; 
+	motor[motorE] = -75;
+	}
    
 nMotorEncoder[motorF] = 0;
-nMotorEncoderTarget[motorF] = n; //set this to be whatever it needs to be so as to make the arm move down into position
+nMotorEncoderTarget[motorF] = 180; //set this to be whatever it needs to be so as to make the arm move down into position
 motor[motorF] = 25;
 while(nMotorRunState[motorF] != runStateIdle) {}
    
@@ -54,15 +56,16 @@ while(SensorValue(sensorSONAR) > 10) //we'll need to play around with this value
 	motor[motorE] = 50;
 	}
    	
-motor[motorA] = 50;
-motor[motorB] = 50;//These should be replaced with the motors that govern the conveyor thing and the signs should be adjusted accordingly so as to make them put the cube into the container
+motor[motorG] = 50;//the sign should be adjusted so as to make it put the cube into the container
 wait1Msec(3000);
    
-motor[motorD] = -75;
-motor[motorE] = -75;
-wait1Msec(1000);//change to make sure it doesn't hit the wall behind it
+while(SensorValue(sensorSONAR) < 20)//change to make sure it doesn't hit the wall behind it
+	{
+	motor[motorD] = -75;
+	motor[motorE] = -75;
+	}
    
-while(SensorValue(sensorInfrared) != 8)
+while(SensorValue(sensorHiTechnicIRSeeker12000) != 8)
 	{
 	motor[motorD] = 50;
 	motor[motorE] = -50;
@@ -74,7 +77,7 @@ while(SensorValue(sensorSONAR) > 5)
    motor[motorD] = 100;
    }
    
-while(SensorValue(sensorInfrared) != 8)
+while(SensorValue(sensorHiTechnicIRSeeker12000) != 8)
 	{
 	motor[motorD] = 50;
 	motor[motorE] = -50;
@@ -85,13 +88,13 @@ motor[motorE] = 100;
 wait1Msec(2000); //adjust to give it enough time to get to the center of the ramp
    
 nMotorEncoder[motorE] = 0;
-nMotorEncoderTarget[motorE] = n;
+nMotorEncoderTarget[motorE] = 180;//change so that it turns 90 degrees
 motor[motorD] = -75;
 motor[motorE] = 75;
 while(nMotorRunState[motorE] = runStateIdle) {}
 motor[motorD] = 0;//all of these blocks need to be adjusted so that it turnes 90 degrees either to the right or to the lef
    
-while(SensorValue(sensorSonar) > 226) //this is assuming it uses cm for its measurements
+while(SensorValue(sensorSONAR) > 226) //this is assuming it uses cm for its measurements
    {
    motor[motorD] = 100;
    motor[motorE] = 100;
